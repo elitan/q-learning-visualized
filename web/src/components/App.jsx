@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import '../App.css';
+
+import Grid from './Grid';
 
 class App extends Component {
   render() {
     return (
       <div className="container">
-         test 
+          <h1>Q Learning Testing</h1>
+          <Grid />
       </div>
     );
   }
