@@ -11,6 +11,8 @@ class Grid extends React.Component {
 		this.start_position = [0, 1];
 		this.end_positoin = [0, 1];
 
+		this.epsilon = 0.1;
+
 		this.alpha = 1;
 		this.r = -0.04;
 		this.r = 0;
@@ -65,10 +67,8 @@ class Grid extends React.Component {
 
 	max(row, col) {
 		if (row < 0 || (row > this.rows - 1) || col < 0 || col > (this.cols - 1)) {
-			console.log('out of grid');
 			return 0;
 		}
-		console.log('valid move');
 		return this.grid[row][col].max();
 	}
 
@@ -117,18 +117,21 @@ class Grid extends React.Component {
 	takeStep() {
 		let current_node = this.getCurrentNode();
 		let highest_direction_index = current_node.getHighestAction();
-		// highest_direction_index = 2;
-		// TODO: insert random direction
+
+		// exploration
+		if (Math.random() < this.epsilon) {
+			highest_direction_index = Math.floor(Math.random() * 4);
+		}
+
 
 		const tmp_potential_agent_position = this.getPotentialAgentPosition(highest_direction_index)
 		const max = this.max(...tmp_potential_agent_position);
 
+		// TODO: not happy with this one...
 		const total_reward = this.r + (this.gamma * max);
-		console.log('total reward: ', total_reward);
 
 		current_node = this.getCurrentNode()
 		if (current_node.type === 'points') {
-			console.log('lets see what happend with setDirectionPoints');
 		}
 		current_node.setDirectionPoints(highest_direction_index, total_reward);
 		this.updateAgentPosition(highest_direction_index);

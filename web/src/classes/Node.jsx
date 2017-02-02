@@ -56,12 +56,8 @@ export default class Node {
 	setDirectionPoints(direction_index, points) {
 		// points = Math.round(points * 100) / 100;
 		if (this.type === 'normal') {
-			console.log('set normal', direction_index, points);
 			this.points[direction_index] = points;
-			console.log('current points: ', this.points);
 		} else if (this.type === 'points') {
-			console.log('set points', direction_index, points);
-			console.log('updating point type to: ', points);
 			this.static_points = points;
 		}
 	}
